@@ -24,8 +24,8 @@ var adddatebox = {
 	hasSetDayCounter: false,
 	daycounter: 0,
 	currentlyEditing: {},
-	datebox: '' +
 	schoolClasses: {},
+	datebox: '' +
 '<div id="datebox">' +
 	'<span id="leftbutton"><span id="bar1"></span><span id="bar2"></span></span>' +
 	'<span id="date"></span>' +
@@ -289,7 +289,7 @@ var adddatebox = {
 	},
 
 	confirmRemove: function() {
-		navigator.notification.confirm("Are you sure you want to remove this class?  This action can NOT be undone.", adddatebox.removeForm, "Delete Class");
+		navigator.notification.confirm("Are you sure you want to remove this entry?  This action can NOT be undone.", adddatebox.removeForm, "Delete Entry");
 	},
 
 	pagecontainerbeforeshow: function() {
@@ -302,7 +302,6 @@ var adddatebox = {
 				localforage.getItem('daysperweek').then(function(value3) {
 					localforage.getItem('schoolClasses').then(function(value4) {
 						adddatebox.loadClasses(value4);
-						adddatebox.scheduleCallback(value, value2, value3);
 						adddatebox.updateDay(0);
 					});
 				});
@@ -319,7 +318,7 @@ var adddatebox = {
 			value4 = [];
 		}
 		adddatebox.schoolClasses = value4; //[{name: "Math", color: "#123456", id=4, whiteText: false, room: "M169"}]
-	}
+	},
 
 	//EDITING
 
