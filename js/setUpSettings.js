@@ -15,6 +15,7 @@ var setUpSettings = {
 		$('#formdays').change(setUpSettings.verifyDay);
 		$('#formtoday').change(setUpSettings.verifyToday);
 		$('#formreset').click(function(ev) {ev.preventDefault(); setUpSettings.confirmReset()});
+		$('#formreset2').click(function(ev) {ev.preventDefault(); setUpSettings.confirmReset2()});
 	},
 
 	updateSettings: function() {
