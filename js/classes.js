@@ -17,4 +17,4 @@
  * under the License.
  */
 
-app.initialize(true, false, false);
+app.initialize(false, true, false);

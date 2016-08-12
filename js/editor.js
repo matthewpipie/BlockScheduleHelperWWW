@@ -16,49 +16,5 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
 
-	initialize: function() {
-		app.bindEvents();
-	},
-
-	// Bind any events that are required on startup. Common events are:
-	// 'load', 'deviceready', 'offline', and 'online'.
-	bindEvents: function() {
-		if (navigator.userAgent.indexOf("Android") != -1) {
-        	document.addEventListener('deviceready', app.onDeviceReady, false);
-		} else {
-			$(document).ready(app.onDeviceReady);
-		}
-		//$(document).one('pagebeforeshow', '.page', app.pagebeforeshow);
-		//$(document).one('deviceready', app.onDeviceReady);
-		$(document).one("pagecontainerbeforeshow", app.pagecontainerbeforeshow);
-
-		adddatebox.showWeekendAndDate = false;
-
-	},
-	// deviceready Event Handler
-	//
-	// The scope of 'this' is the event. In order to call the 'receivedEvent'
-	// function, we must explicitly call 'app.receivedEvent(...);'
-	onDeviceReady: function() {
-		app.receivedEvent('deviceready');
-	},
-
-	pagecontainerbeforeshow: function() {
-		app.receivedEvent('pagecontainerbeforeshow');
-	},
-
-	// Update DOM on a Received Event
-	receivedEvent: function(id) {
-
-		setUpStorage[id]();
-		addmenu[id]();
-		dateConverter[id]();
-		adddatebox[id]();
-		//alert(id);
-
-	}
-};
-
-app.initialize();
+app.initialize(false, false, false);

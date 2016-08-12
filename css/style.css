@@ -33,3 +33,7 @@ fieldset > div:last-child > div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow {
 	color: rgb(51, 51, 51) !important;
 	text-shadow: rgb(243, 243, 243) 0px 1px 0px !important;
 }
+
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+	text-shadow: none;
+}

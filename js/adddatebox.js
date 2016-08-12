@@ -25,6 +25,7 @@ var adddatebox = {
 	daycounter: 0,
 	currentlyEditing: {},
 	datebox: '' +
+	schoolClasses: {},
 '<div id="datebox">' +
 	'<span id="leftbutton"><span id="bar1"></span><span id="bar2"></span></span>' +
 	'<span id="date"></span>' +
@@ -165,7 +166,9 @@ var adddatebox = {
 		if (blockDay != null && adddatebox.sortedSchedule[blockDay] != null) {
 
 			for (var i = 0; i < adddatebox.sortedSchedule[blockDay].length; i++) {
-
+//TODO:
+//look for proper actual class in localforage(classes)
+//
 				$scheduletable.append("<tr class='rowid" + (adddatebox.sortedSchedule[blockDay][i]['isBreak'] ? " break" : "") + (adddatebox.sortedSchedule[blockDay][i]['isGlobal'] ? " global" : "") + "' id='row" + adddatebox.sortedSchedule[blockDay][i]['id'] + "'><td>" +
 					adddatebox.convertTimeToTwelveHour(adddatebox.sortedSchedule[blockDay][i]['starttime'], twelveHourTime) +
 					" - " +
@@ -297,15 +300,26 @@ var adddatebox = {
 		localforage.getItem('schedule').then(function(value) {
 			localforage.getItem('globalSchedule').then(function(value2) {
 				localforage.getItem('daysperweek').then(function(value3) {
-					adddatebox.scheduleCallback(value, value2, value3);
+					localforage.getItem('schoolClasses').then(function(value4) {
+						adddatebox.loadClasses(value4);
+						adddatebox.scheduleCallback(value, value2, value3);
+						adddatebox.updateDay(0);
+					});
 				});
 			});
 		});
 		//adddatebox.scheduleCallback([[new testconstructor('0', 'math', '13:45', '13:46', false, false), new testconstructor('1', 'english', '14:05', '19:05', true, false)], [new testconstructor('2', 'study hallo', '8:56', '12:45', false, false)]], [new testconstructor('3', 'globaltest', '13:45', '21:43', false, true)]);
-		adddatebox.updateDay(0);
 		adddatebox.setUpClicks();
 
 	},
+
+	loadClasses: function(value4) {
+		if (value4 == undefined) {
+			localforage.setItem('schoolClasses', []);
+			value4 = [];
+		}
+		adddatebox.schoolClasses = value4; //[{name: "Math", color: "#123456", id=4, whiteText: false, room: "M169"}]
+	}
 
 	//EDITING
 
