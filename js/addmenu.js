@@ -22,7 +22,7 @@ var addmenu = {
 "<h2 class='ui-header ui-bar-inherit'>Menu</h2>" +
 "<ul>" +
 	"<a href='index.html' data-ajax=false><li id='schedulelink'>Schedule</li></a>" +
-	"<a href='editor.html' data-ajax=false><li id='editorlink'>Editor</li></a>" +
+	"<a href='editor.html' data-ajax=false><li id='editorlink'>Schedule Editor</li></a>" +
 	"<a href='classes.html' data-ajax=false><li id='classeslink'>Class Editor</li></a>" +
 	"<a href='settings.html' data-ajax=false><li id='settingslink'>Settings</li></a>" +
 "</ul>",

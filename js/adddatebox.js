@@ -160,6 +160,14 @@ var adddatebox = {
 
 	},
 
+	findClass: function(schoolClassIDToFind, partToFind) {
+		for (var i = 0; i < adddatebox.schoolClasses.length; i++) {
+			if (adddatebox.schoolClasses[i]['id'] == schoolClassIDToFind) {
+				return adddatebox.schoolClasses[i][partToFind];
+			}
+		}
+	},
+
 	updateDateBox: function(blockDay, twelveHourTime) {
 		var $scheduletable = $("#scheduletable");
 		$scheduletable.html("<tr><th>Time</th><th>Class</th></tr>");
@@ -169,13 +177,16 @@ var adddatebox = {
 //TODO:
 //look for proper actual class in localforage(classes)
 //
-				$scheduletable.append("<tr class='rowid" + (adddatebox.sortedSchedule[blockDay][i]['isBreak'] ? " break" : "") + (adddatebox.sortedSchedule[blockDay][i]['isGlobal'] ? " global" : "") + "' id='row" + adddatebox.sortedSchedule[blockDay][i]['id'] + "'><td>" +
+				$scheduletable.append("<tr class='rowid" + (adddatebox.sortedSchedule[blockDay][i]['isGlobal'] ? " global" : "") + "' id='row" + adddatebox.sortedSchedule[blockDay][i]['id'] + "' style='color: " +
+					(adddatebox.findClass(adddatebox.sortedSchedule[blockDay][i]['className'], 'whiteText') ? "white" : "black") +
+					";'><td>" +
 					adddatebox.convertTimeToTwelveHour(adddatebox.sortedSchedule[blockDay][i]['starttime'], twelveHourTime) +
 					" - " +
 					adddatebox.convertTimeToTwelveHour(adddatebox.sortedSchedule[blockDay][i]['endtime'], twelveHourTime) +
 					"</td><td>" +
-					adddatebox.sortedSchedule[blockDay][i]['className'] +
-					(adddatebox.sortedSchedule[blockDay][i]['room'] == "" || adddatebox.sortedSchedule[blockDay][i]['isBreak'] ? "" : " (" + adddatebox.sortedSchedule[blockDay][i]['room'] + ")"));
+					adddatebox.findClass(adddatebox.sortedSchedule[blockDay][i]['className'], 'className') +
+					(adddatebox.findClass(adddatebox.sortedSchedule[blockDay][i]['className'], 'room') == "" ? "" : " (" + adddatebox.findClass(adddatebox.sortedSchedule[blockDay][i]['className'], 'room') + ")"));
+				$("#row" + adddatebox.sortedSchedule[blockDay][i]['id'] + " td").css('background', adddatebox.findClass(adddatebox.sortedSchedule[blockDay][i]['className'], 'bgcolor'));
 			}
 			
 		}
@@ -224,7 +235,7 @@ var adddatebox = {
 			localforage.setItem('daysperweek', value3);
 		}
 		if (value == undefined) {
-			$('#content').append("Create a schedule by clicking on the menu icon and going to the editor");
+			$('#content').append("Add some classes by clicking on the menu and navigating to the Class Editor.  Then, after adding classes, go to the Schedule Editor to add them into a place on your schedule.  ");
 			value = [];
 			for (var i = 0; i < value3; i++) {
 				value.push([]);
@@ -302,6 +313,7 @@ var adddatebox = {
 				localforage.getItem('daysperweek').then(function(value3) {
 					localforage.getItem('schoolClasses').then(function(value4) {
 						adddatebox.loadClasses(value4);
+						adddatebox.scheduleCallback(value, value2, value3);
 						adddatebox.updateDay(0);
 					});
 				});
@@ -318,6 +330,13 @@ var adddatebox = {
 			value4 = [];
 		}
 		adddatebox.schoolClasses = value4; //[{name: "Math", color: "#123456", id=4, whiteText: false, room: "M169"}]
+
+		for (var i = 0; i < adddatebox.schoolClasses.length; i++) {
+			$('#formname').append("<option value='" + adddatebox.schoolClasses[i]['id'] + "'>" + adddatebox.schoolClasses[i]['className'] +
+				(adddatebox.schoolClasses[i]['room'] == "" ? "" : " (" + adddatebox.schoolClasses[i]['room'] + ")") + "</option>");
+		}
+
+
 	},
 
 	//EDITING
@@ -328,6 +347,7 @@ var adddatebox = {
 		//find highest id rn
 		var highest = -1;
 		for (var i = 0; i < adddatebox.sortedSchedule.length; i++) {
+			if (adddatebox.sortedSchedule[i] == undefined) {continue;}
 			for (var j = 0; j < adddatebox.sortedSchedule[i].length; j++) {
 				if (parseInt(adddatebox.sortedSchedule[i][j]['id']) > highest) {
 					highest = parseInt(adddatebox.sortedSchedule[i][j]['id']);
@@ -354,7 +374,7 @@ var adddatebox = {
 
 
 		console.log(schoolClass);
-		$('#formname').val(schoolClass['className']);
+		$('#formname').val(schoolClass['className']).change();
 		if (schoolClass['starttime'].length == 4) {
 			schoolClass['starttime'] = "0" + schoolClass['starttime'];
 		}
@@ -365,13 +385,6 @@ var adddatebox = {
 		}
 		$('#formendtime').val(schoolClass['endtime']);
 
-		if (schoolClass['isBreak']) {
-			$('#formbreak')[0].checked = true;
-			$("#formbreak").flipswitch("refresh");
-		} else {
-			$('#formbreak')[0].checked = false;
-			$("#formbreak").flipswitch("refresh");
-		}
 		if (schoolClass['isGlobal']) {
 			$('#formglobal')[0].checked = true;
 			$("#formglobal").flipswitch("refresh");
@@ -379,7 +392,6 @@ var adddatebox = {
 			$('#formglobal')[0].checked = false;
 			$("#formglobal").flipswitch("refresh");
 		}
-		$("#formroom").val(schoolClass['room']);
 
 		adddatebox.currentlyEditing = {'schoolClass': schoolClass, 'dayofschoolweek': dayofschoolweek, 'isNew': isNew};;
 
@@ -454,7 +466,7 @@ var adddatebox = {
 	handleSubmit: function() {
 		$('#openpopup').popup('close');
 
-		if ($('#formstarttime').val() == "" || $('#formendtime').val() == "") {
+		if ($('#formstarttime').val() == "" || $('#formendtime').val() == "" || $('#formname').val() == undefined) {
 
 			navigator.notification.alert("Error in saving data.  Did you fill out all forms?", null, "Error", "OK");
 			return;
@@ -474,9 +486,7 @@ var adddatebox = {
 				correctClass['className'] = $("#formname").val();
 				correctClass['starttime'] = $("#formstarttime").val();
 				correctClass['endtime'] = $("#formendtime").val();
-				correctClass['isBreak'] = $('#formbreak')[0].checked;
 				correctClass['isGlobal'] = $('#formglobal')[0].checked;
-				correctClass['room'] = $('#formroom').val();
 
 				if (correctClass['isGlobal'] && !adddatebox.currentlyEditing['schoolClass']['isGlobal']) {
 					//USER MADE IT GLOBAL

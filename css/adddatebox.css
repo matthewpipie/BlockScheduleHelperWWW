@@ -70,14 +70,6 @@
 	transform: rotate(45deg);
 }
 
-.break td {
-	background: #defff3 !important;
-}
-
-.global td {
-	background: #e1eaff !important;
-}
-
-.global.break td {
-	background: #E0F5F9 !important;
+.global td:last-child {
+	font-weight: bold;
 }

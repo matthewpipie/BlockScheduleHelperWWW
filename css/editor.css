@@ -63,20 +63,3 @@ td:nth-child(odd) {
 #editor {
 	height: 100%;
 }
-
-#formremove {
-	background-color: red;
-    opacity: .3;
-}
-
-#formsubmit {
-	background-color: green;
-    opacity: .3;
-}
-
-.ib {
-	display: inline-block;
-}
-#openpopup {
-	width: 80vw;
-}

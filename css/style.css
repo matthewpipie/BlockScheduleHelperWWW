@@ -37,3 +37,17 @@ fieldset > div:last-child > div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow {
 .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
 	text-shadow: none !important;
 }
+
+#formremove, #formreset, #formreset2 {
+	background-color: red;
+    opacity: .3;
+}
+
+#formsubmit {
+	background-color: green;
+    opacity: .3;
+}
+
+#openpopup {
+	width: 80vw;
+}
