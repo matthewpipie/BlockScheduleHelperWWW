@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -291,12 +290,12 @@ var adddatebox = {
 	},
 
 	setUpClicks: function() {
-		$('#leftbutton').click(function() {adddatebox.gotClick(-1);});
-		$('#rightbutton').click(function() {adddatebox.gotClick(1);});
-		$('#formsubmit').click(function(ev) {ev.preventDefault(); adddatebox.handleSubmit()});
-		$('#formremove').click(function(ev) {ev.preventDefault(); adddatebox.confirmRemove();});
-		$('.plusbuttonholder').click(function() {adddatebox.addSchoolClass(adddatebox.daycounter)})
-		$('#formname').click(function() {$(this).select();});
+		$('#leftbutton').bind('touchstart', function() {adddatebox.gotClick(-1);});
+		$('#rightbutton').bind('touchstart', function() {adddatebox.gotClick(1);});
+		$('#formsubmit').bind('touchstart', function(ev) {ev.preventDefault(); adddatebox.handleSubmit()});
+		$('#formremove').bind('touchstart', function(ev) {ev.preventDefault(); adddatebox.confirmRemove();});
+		$('.plusbuttonholder').bind('touchstart', function() {adddatebox.addSchoolClass(adddatebox.daycounter)})
+		$('#formname').bind('touchstart', function() {$(this).select();});
 	},
 
 	confirmRemove: function() {
@@ -449,7 +448,7 @@ var adddatebox = {
 
 	updateClickies: function(dayofschoolweek) {
 		console.log('updating clickies');
-		$('.rowid').click(function() {
+		$('.rowid').bind('touchstart', function() {
 			console.log('clickerino');
 			console.log(adddatebox.sortedSchedule[dayofschoolweek]);
 			console.log(dayofschoolweek);
