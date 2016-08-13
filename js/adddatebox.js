@@ -354,7 +354,7 @@ var adddatebox = {
 				}
 			}
 		}
-		var tempSchoolClass = {'className': "0", 'starttime': "00:00", 'endtime': "00:00", 'id': (highest + 1).toString(), 'isGlobal': false};
+		var tempSchoolClass = {'className': "0", 'starttime': "12:00", 'endtime': "12:00", 'id': (highest + 1).toString(), 'isGlobal': false};
 		adddatebox.editSchoolClass(tempSchoolClass, dayofschoolweek, true)
 
 	},
