@@ -5,6 +5,7 @@ body {
 	background-color:#E4E4E4;
 	-webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
+    -webkit-overflow-scrolling: touch;
 
 }
 
@@ -51,3 +52,4 @@ fieldset > div:last-child > div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow {
 #openpopup {
 	width: 80vw;
 }
+#header {border-top: transparent}

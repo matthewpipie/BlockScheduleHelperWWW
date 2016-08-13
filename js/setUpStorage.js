@@ -5,6 +5,7 @@ var setUpStorage = {
 	pagecontainerbeforeshow: function() {},
 
 	deviceready: function() {
+		FastClick.attach(document.body);
 		localforage.defineDriver(window.cordovaSQLiteDriver).then(function() {
 			return localforage.setDriver([
 					// Try setting cordovaSQLiteDriver if available,
