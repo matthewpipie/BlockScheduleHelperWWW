@@ -146,10 +146,36 @@ var setUpSettings = {
 							
 							var nowTime = now.getHours() * 60 + now.getMinutes();
 
-							var isInClassAndInit = false;
+
+							var firstStartTime;
+
+							var hasfound1 = false;
+							var hasfound2 = false;
+							var hasfound3 = false;
+							for (var i = nowTime; i < 1439; i++) {
+								if (starttimeSorted.filter(function(a) {return a['starttime'] == i}).length) {
+									if (!hasfound1) {firstStartTime = i; hasfound1 = true; continue;}
+									else {
+										hasfound2 = true;
+										break;
+									}
+								}
+							}
+
+							if (!hasfound1) {
+								setUpSettings.scheduleForTomorrow();
+								return;
+							}
+
 							if (isInit) {
 								var results = starttimeSorted.filter(function(a) {return a['starttime'] < nowTime && a['endtime'] > nowTime});
 								isInClassAndInit = (results.length == 0 ? false : true);
+
+								if (firstStartTime - nowTime > 10 || results.length) {
+									//schedule aft
+									i = firstStartTime;
+									hasfound2 = true;
+								}
 
 								/* get closest ahead starttime and endtime before it
 								if greater than 10 mins from now till next starttime AND isInit
@@ -157,31 +183,18 @@ var setUpSettings = {
 									if you are in a class AND isInit, schedule
 									if not, skip one starttime and schedule then*/
 
-								if (nowTime < starttimeSorted[0]['starttime'] - 600) {
-									isInClassAndInit = true;
-								}
 							}
-
-							var hasfound1 = isInClassAndInit;
-							var hasfound2 = false;
-							var hasfound3 = false;
-							for (var i = nowTime; i < 1439; i++) {
-								if (starttimeSorted.filter(function(a) {return a['starttime'] == i}).length) {
-									if (!hasfound1) {hasfound1 = true; continue;}
-									else {
-										hasfound2 = true;
-										break;
-									}
-								}
-							}
+							
+							var timeToClear = i;
 							if (!hasfound2) {
-								console.log('next day lel');
+								setUpSettings.scheduleForTomorrow();
 								return;// NEXT THINGO IS TOMORROW TODO TODO AL:DFKJ :KSJDFLKSJDNFLKJSHNDFKJWEBSDFKBVWSKDEFBVKEDWSBFVKWIEJBDFGKIWSUJEBGDFRIKLWEDBGFKIEWBGDR>FKLBGWE>DLKIRFBGEWDIKLJRFBGWKIDBFRG
 							}
 
 							for (var j = i; j >= 0; j--) {
 								if (endtimeSorted.filter(function(a) {return a['endtime'] == j}).length) {
 									hasfound3 = true;
+									firstEndTime = j;
 									break;
 								}
 							}
@@ -190,14 +203,13 @@ var setUpSettings = {
 								return; //someone made their endtimes past their starttimes....
 							}
 
-							var timeToClear = i;
 							var timeToNotify = j;
 							var dateToNotify = new Date();
 							console.log(timeToClear);
 							console.log(timeToNotify);
-							if (timeToClear - timeToNotify > 600) {
+							if (timeToClear - timeToNotify > 10) {
 								console.log('too biggie');
-								timeToNotify = timeToClear - 600;
+								timeToNotify = timeToClear - 10;
 							}
 							var classToNotify = starttimeSorted.filter(function(a) {return a['starttime'] == timeToClear})[0];
 							if (classToNotify['isGlobal']) {
