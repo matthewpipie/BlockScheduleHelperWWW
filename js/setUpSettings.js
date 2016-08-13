@@ -85,7 +85,10 @@ var setUpSettings = {
 		}
 	},
 
-	scheduleNextEventAndClear: function(notification) {
+	scheduleNextEventAndClear: function(notification, isInit) {
+		if (isInit == undefined) {
+			isInit = false;
+		}
 		//settimout for x minutes to wipe notifications
 		//make next notification
 		localforage.getItem('schoolClasses').then(function(schoolClasses) {
@@ -120,7 +123,6 @@ var setUpSettings = {
 							for (var i = 0; i < timeouts.length; i++) {
 								clearTimeout(timeouts[i]);
 							}
-							cordova.plugins.notification.local.cancelAll();
 
 							day = setUpSettings.calculateDay(dateday, daysperweek);
 
@@ -141,9 +143,26 @@ var setUpSettings = {
 							}
 							var starttimeSorted = timeAndId.sort(function(a, b) {return parseInt(a['starttime'], 10) - parseInt(b['starttime'], 10);})
 							var endtimeSorted = timeAndId.sort(function(a, b) {return parseInt(a['endtime'], 10) - parseInt(b['endtime'], 10);})
-
+							
 							var nowTime = now.getHours() * 60 + now.getMinutes();
-							var hasfound1 = false;
+
+							var isInClassAndInit = false;
+							if (isInit) {
+								var results = starttimeSorted.filter(function(a) {return a['starttime'] < nowTime && a['endtime'] > nowTime});
+								isInClassAndInit = (results.length == 0 ? false : true);
+
+								/* get closest ahead starttime and endtime before it
+								if greater than 10 mins from now till next starttime AND isInit
+								if less,
+									if you are in a class AND isInit, schedule
+									if not, skip one starttime and schedule then*/
+
+								if (nowTime < starttimeSorted[0]['starttime'] - 600) {
+									isInClassAndInit = true;
+								}
+							}
+
+							var hasfound1 = isInClassAndInit;
 							var hasfound2 = false;
 							var hasfound3 = false;
 							for (var i = nowTime; i < 1439; i++) {
@@ -156,7 +175,8 @@ var setUpSettings = {
 								}
 							}
 							if (!hasfound2) {
-								// NEXT THINGO IS TOMORROW TODO TODO AL:DFKJ :KSJDFLKSJDNFLKJSHNDFKJWEBSDFKBVWSKDEFBVKEDWSBFVKWIEJBDFGKIWSUJEBGDFRIKLWEDBGFKIEWBGDR>FKLBGWE>DLKIRFBGEWDIKLJRFBGWKIDBFRG
+								console.log('next day lel');
+								return;// NEXT THINGO IS TOMORROW TODO TODO AL:DFKJ :KSJDFLKSJDNFLKJSHNDFKJWEBSDFKBVWSKDEFBVKEDWSBFVKWIEJBDFGKIWSUJEBGDFRIKLWEDBGFKIEWBGDR>FKLBGWE>DLKIRFBGEWDIKLJRFBGWKIDBFRG
 							}
 
 							for (var j = i; j >= 0; j--) {
@@ -173,15 +193,20 @@ var setUpSettings = {
 							var timeToClear = i;
 							var timeToNotify = j;
 							var dateToNotify = new Date();
+							console.log(timeToClear);
+							console.log(timeToNotify);
 							if (timeToClear - timeToNotify > 600) {
+								console.log('too biggie');
 								timeToNotify = timeToClear - 600;
 							}
-							var classToNotify = endtimeSorted.filter(function(a) {return a['endtime'] == j})[0];
+							var classToNotify = starttimeSorted.filter(function(a) {return a['starttime'] == timeToClear})[0];
 							if (classToNotify['isGlobal']) {
 								classToNotify = globalSchedule.filter(function(a) {return a['id'] == classToNotify['id']})[0];
 							}
 							else {
-								classToNotify = schedule.filter(function(a) {return a[day]['id'] == classToNotify['id']})[0];
+								console.log(schedule);
+								console.log(classToNotify);
+								classToNotify = schedule[day].filter(function(a) {return a['id'] == classToNotify['id']})[0];
 							}
 							timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * (timeToClear - nowTime)));
 
@@ -192,12 +217,13 @@ var setUpSettings = {
 
 							scheduleObj = { 
 								id: 0,
-								title: "Next class: " + setUpSettings.findClass(classToNotify['className'], 'className') +
-									(setUpSettings.findClass(classToNotify['className'], 'room') == "" ? "" : " (" + setUpSettings.findClass(classToNotify['className'], 'room') + ")"),
-								text: "Starts in " + (timeToClear - nowTime).toString() + " minutes",
+								title: "Next class: " + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'className') +
+									(setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') == "" ? "" : " (" + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') + ")"),
+								text: "Starts in " + (timeToClear - timeToNotify).toString() + " minutes",
 								at: dateToNotify,
-								led: setUpSettings.findClass(classToNotify['className'], 'bgcolor').substr(1)
+								led: setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor').substr(1)
 							};
+							console.log(scheduleObj);
 
 							/*if (thingo) {
 								scheduleObj['sound'] = xyz
@@ -245,12 +271,13 @@ var setUpSettings = {
 	makeNewScheduleEvents: function() {
 
 		if (setUpSettings.day === false) {
-			setTimeout(makeNewScheduleEvents, 10);
+			setTimeout(setUpSettings.makeNewScheduleEvents, 10);
+			return;
 		}
 
 		cordova.plugins.notification.local.cancelAll(function() {
 			cordova.plugins.notification.local.on('trigger', setUpSettings.scheduleNextEventAndClear);
-			setUpSettings.scheduleNextEventAndClear();
+			setUpSettings.scheduleNextEventAndClear(null, true);
 		});
 	},
 
