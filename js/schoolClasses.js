@@ -59,7 +59,6 @@ var schoolClasses = {
 			preferredFormat: 'hex',
 			maxSelectionSize: 0,
 			palette: schoolClasses.palette,
-			change: schoolClasses.spectrumChange,
 			show: schoolClasses.lockPopup,
 			hide: schoolClasses.unlockPopup
 		});
@@ -67,7 +66,7 @@ var schoolClasses = {
 
 	spectrumChange: function(tinycolor) {
 
-		if (tinycolor == undefined) {return;}
+		if (tinycolor == undefined) {tinycolor = $("#formbgcolor").spectrum('get');}
 
 		var alreadyIn = false;
 		var tinycolorhex = tinycolor.toHexString();
@@ -140,6 +139,7 @@ var schoolClasses = {
 		});
 		$('#formsubmit').button('option', 'disabled', false);
 		$('#formremove').button('option', 'disabled', false);
+		schoolClasses.spectrumChange();
 	},
 
 	loadClasses: function(value4) {
