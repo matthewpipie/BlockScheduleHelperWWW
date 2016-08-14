@@ -44,7 +44,7 @@ var schoolClasses = {
 	setUpClicks: function() {
 		$('#formsubmit').on('touchend', schoolClasses.handleSubmit);
 		$('#formremove').on('touchend', function() {navigator.notification.confirm("Are you sure you want to remove this class?  This action can NOT be undone.", schoolClasses.removeForm, "Delete Class");});
-		$('.plusbuttonholder').on('touchend', schoolClasses.addNewClass);
+		$('.plusbuttonholder').on('touchend', function(ev) {ev.preventDefault(); schoolClasses.addNewClass();});
 		$('#formname').on('touchend', function() {$(this).select();});
 	},
 
@@ -204,7 +204,7 @@ var schoolClasses = {
 		schoolClasses.currentlyEditing = {'schoolClass': schoolClass, 'isNew': isNew};;
 
 		$('#openpopup').popup('open');
-		setTimeout(function() {document.activeElement.blur();}, 10);
+		//setTimeout(function() {document.activeElement.blur();}, 10);
 	},
 
 	removeForm: function(buttonIndex) {
