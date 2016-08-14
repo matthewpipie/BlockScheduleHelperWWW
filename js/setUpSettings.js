@@ -225,7 +225,7 @@ var setUpSettings = {
 								newDate.setHours(newDate.getHours() + 24);
 								day = setUpSettings.calculateDay(dateday, daysperweek, newDate);
 								var out = false;
-								for (var k = 0; k < 21; k++) {
+								for (var k = 0; k < 28; k++) {
 									console.log(day);
 										console.log(newDate);
 									if (schedule[day].length != 0 && newDate.getDay() < 6 && newDate.getDay() > 0) {
@@ -242,7 +242,11 @@ var setUpSettings = {
 								}
 
 								if (!out) {
-									return; //TODO: popup dialog
+									$("#formnotifications")[0].checked = false;
+									$("#formnotifications").flipswitch("refresh");
+									navigator.notification.alert("Error: Please create a schedule first.");
+									setUpSettings.handleSubmit();
+									return;
 								}
 
 								timeAndId = []; //{id: '5', starttime: 13546, endtime: 15493, isGlobal: false}
