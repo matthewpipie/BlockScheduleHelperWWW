@@ -204,7 +204,7 @@ var schoolClasses = {
 		schoolClasses.currentlyEditing = {'schoolClass': schoolClass, 'isNew': isNew};;
 
 		$('#openpopup').popup('open');
-		document.activeElement.blur();
+		setTimeout(function() {document.activeElement.blur();}, 10);
 	},
 
 	removeForm: function(buttonIndex) {
