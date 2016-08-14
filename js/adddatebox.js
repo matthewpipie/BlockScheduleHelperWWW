@@ -395,6 +395,7 @@ var adddatebox = {
 		adddatebox.currentlyEditing = {'schoolClass': schoolClass, 'dayofschoolweek': dayofschoolweek, 'isNew': isNew};;
 
 		$('#openpopup').popup('open');
+		setTimeout(function() {document.activeElement.blur();}, 10);
 	},
 
 
