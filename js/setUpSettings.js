@@ -70,7 +70,7 @@ var setUpSettings = {
 		navigator.notification.confirm("Are you sure you would like to delete your schedule?  This can NOT be undone.", setUpSettings.handleReset, "Reset Schedule");
 	},
 	confirmReset2: function() {
-		navigator.notification.confirm("Are you sure you would like to delete all of your classes?  This can NOT be undone.", setUpSettings.handleReset2, "Reset Classes");
+		navigator.notification.confirm("Are you sure you would like to delete your schedule and all of your classes?  This can NOT be undone.", setUpSettings.handleReset2, "Reset Everything");
 	},
 	handleReset: function(buttonIndex) {
 		if (buttonIndex == 1) {
@@ -81,8 +81,10 @@ var setUpSettings = {
 	},
 	handleReset2: function(buttonIndex) {
 		if (buttonIndex == 1) {
+			localforage.setItem('schedule', undefined);
+			localforage.setItem('globalSchedule', undefined);
 			localforage.setItem('schoolClasses', undefined);
-			navigator.notification.alert("Classes deleted.");
+			navigator.notification.alert("Schedule and classes deleted.");
 		}
 	},
 

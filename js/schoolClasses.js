@@ -130,12 +130,16 @@ var schoolClasses = {
 		$('#openpopup').popup({
 		  dismissible: false
 		});
+		$('#formsubmit').button('option', 'disabled', true);
+		$('#formremove').button('option', 'disabled', true);
 	},
 
 	unlockPopup: function() {
 		$('#openpopup').popup({
 		  dismissible: true
 		});
+		$('#formsubmit').button('option', 'disabled', false);
+		$('#formremove').button('option', 'disabled', false);
 	},
 
 	loadClasses: function(value4) {
