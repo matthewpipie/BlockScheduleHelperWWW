@@ -395,6 +395,7 @@ var setUpSettings = {
 		setUpSettings.pushNotifications = pushNotifications;
 		setUpSettings.dateformat = dateformat;
 		setUpSettings.daysperweek = daysperweek;
+		navigator.notification.alert("Settings saved.");
 
 	},
 	loadSettings: function() {
