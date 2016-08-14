@@ -13,11 +13,11 @@ var setUpSettings = {
 	deviceready: function() {
 		setUpSettings.loadSettings();
 		setUpSettings.updateSettings();
-		$('#formsubmit').click(function(ev) {ev.preventDefault(); setUpSettings.handleSubmit()});
+		$('#formsubmit').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.handleSubmit()});
 		$('#formdays').change(setUpSettings.verifyDay);
 		$('#formtoday').change(setUpSettings.verifyToday);
-		$('#formreset').click(function(ev) {ev.preventDefault(); setUpSettings.confirmReset()});
-		$('#formreset2').click(function(ev) {ev.preventDefault(); setUpSettings.confirmReset2()});
+		$('#formreset').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.confirmReset()});
+		$('#formreset2').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.confirmReset2()});
 		//setUpSettings.makeNewScheduleEvents();
 	},
 

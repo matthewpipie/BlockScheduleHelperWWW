@@ -290,12 +290,12 @@ var adddatebox = {
 	},
 
 	setUpClicks: function() {
-		$('#leftbutton').click(function() {adddatebox.gotClick(-1);});
-		$('#rightbutton').click(function() {adddatebox.gotClick(1);});
-		$('#formsubmit').click(function(ev) {ev.preventDefault(); adddatebox.handleSubmit()});
-		$('#formremove').click(function(ev) {ev.preventDefault(); adddatebox.confirmRemove();});
-		$('.plusbuttonholder').click(function() {adddatebox.addSchoolClass(adddatebox.daycounter)})
-		$('#formname').click(function() {$(this).select();});
+		$('#leftbutton').on('touchend', function() {adddatebox.gotClick(-1);});
+		$('#rightbutton').on('touchend', function() {adddatebox.gotClick(1);});
+		$('#formsubmit').on('touchend', function(ev) {ev.preventDefault(); adddatebox.handleSubmit()});
+		$('#formremove').on('touchend', function(ev) {ev.preventDefault(); adddatebox.confirmRemove();});
+		$('.plusbuttonholder').on('touchend', function() {adddatebox.addSchoolClass(adddatebox.daycounter)})
+		$('#formname').on('touchend', function() {$(this).select();});
 	},
 
 	confirmRemove: function() {
@@ -448,7 +448,7 @@ var adddatebox = {
 
 	updateClickies: function(dayofschoolweek) {
 		console.log('updating clickies');
-		$('.rowid').click(function() {
+		$('.rowid').on('touchend', function() {
 			console.log('clickerino');
 			console.log(adddatebox.sortedSchedule[dayofschoolweek]);
 			console.log(dayofschoolweek);

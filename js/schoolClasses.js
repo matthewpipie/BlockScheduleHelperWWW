@@ -42,10 +42,10 @@ var schoolClasses = {
 	},
 
 	setUpClicks: function() {
-		$('#formsubmit').click(schoolClasses.handleSubmit);
-		$('#formremove').click(function() {navigator.notification.confirm("Are you sure you want to remove this class?  This action can NOT be undone.", schoolClasses.removeForm, "Delete Class");});
-		$('.plusbuttonholder').click(schoolClasses.addNewClass);
-		$('#formname').click(function() {$(this).select();});
+		$('#formsubmit').on('touchend', schoolClasses.handleSubmit);
+		$('#formremove').on('touchend', function() {navigator.notification.confirm("Are you sure you want to remove this class?  This action can NOT be undone.", schoolClasses.removeForm, "Delete Class");});
+		$('.plusbuttonholder').on('touchend', schoolClasses.addNewClass);
+		$('#formname').on('touchend', function() {$(this).select();});
 	},
 
 	setUpSpectrum: function() {
@@ -154,7 +154,7 @@ var schoolClasses = {
 	},
 
 	setUpClickies: function() {
-		$('.rowid').click(function() {
+		$('.rowid').on('touchend', function() {
 			for (var i = 0; i < schoolClasses.schoolClasses.length; i++) {
 				if (typeof($(this).attr('id')) == "string") {
 					if (schoolClasses.schoolClasses[i]['id'] == $(this).attr('id').substr(3)) {
