@@ -294,7 +294,7 @@ var adddatebox = {
 		$('#rightbutton').on('touchend', function() {adddatebox.gotClick(1);});
 		$('#formsubmit').on('touchend', function(ev) {ev.preventDefault(); adddatebox.handleSubmit()});
 		$('#formremove').on('touchend', function(ev) {ev.preventDefault(); adddatebox.confirmRemove();});
-		$('.plusbuttonholder').on('touchend', function() {adddatebox.addSchoolClass(adddatebox.daycounter)})
+		$('.plusbuttonholder').on('touchend', function(ev) {ev.preventDefault(); adddatebox.addSchoolClass(adddatebox.daycounter)})
 		$('#formname').on('touchend', function() {$(this).select();});
 	},
 
@@ -395,7 +395,6 @@ var adddatebox = {
 		adddatebox.currentlyEditing = {'schoolClass': schoolClass, 'dayofschoolweek': dayofschoolweek, 'isNew': isNew};;
 
 		$('#openpopup').popup('open');
-		setTimeout(function() {document.activeElement.blur();}, 10);
 	},
 
 
