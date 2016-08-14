@@ -125,6 +125,9 @@ var setUpSettings = {
 							}
 
 							day = setUpSettings.calculateDay(dateday, daysperweek, new Date());
+							if (schedule[day] == undefined) {
+								schedule[day] = [];
+							}
 
 							var timeAndId = []; //{id: '5', starttime: 13546, endtime: 15493, isGlobal: false}
 							for (var j = 0; j < schedule[day].length; j++) {
@@ -228,6 +231,9 @@ var setUpSettings = {
 								for (var k = 0; k < 28; k++) {
 									console.log(day);
 										console.log(newDate);
+									if (schedule[day] == undefined) {
+										schedule[day] = [];
+									}
 									if (schedule[day].length != 0 && newDate.getDay() < 6 && newDate.getDay() > 0) {
 										console.log('we out fam');
 										out = true;
@@ -305,6 +311,7 @@ var setUpSettings = {
 							}*/
 
 							cordova.plugins.notification.local.schedule(scheduleObj);
+							navigator.notification.alert("Notifications have been turned on.");
 
 
 						}); //if its past all endtimes, do tomorrow
@@ -376,7 +383,6 @@ var setUpSettings = {
 			//turned on notifications
 			cordova.plugins.notification.local.cancelAll(function() {
 				setUpSettings.scheduleNextEventAndClear(null, true);
-				navigator.notification.alert("Notifications have been turned on.");
 			});
 		}
 		else if (!(pushNotifications) && setUpSettings.pushNotifications) {
