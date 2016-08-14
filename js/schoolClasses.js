@@ -154,7 +154,8 @@ var schoolClasses = {
 	},
 
 	setUpClickies: function() {
-		$('.rowid').on('touchend', function() {
+		$('.rowid').on('touchend', function(ev) {
+			ev.preventDefault();
 			for (var i = 0; i < schoolClasses.schoolClasses.length; i++) {
 				if (typeof($(this).attr('id')) == "string") {
 					if (schoolClasses.schoolClasses[i]['id'] == $(this).attr('id').substr(3)) {

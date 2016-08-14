@@ -449,7 +449,8 @@ var adddatebox = {
 
 	updateClickies: function(dayofschoolweek) {
 		console.log('updating clickies');
-		$('.rowid').on('touchend', function() {
+		$('.rowid').on('touchend', function(ev) {
+			ev.preventDefault();
 			console.log('clickerino');
 			console.log(adddatebox.sortedSchedule[dayofschoolweek]);
 			console.log(dayofschoolweek);
