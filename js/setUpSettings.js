@@ -439,7 +439,12 @@ var setUpSettings = {
 			return;
 		}
 
-		$("#formtoday").val(dateConverter.firstDay + 2);
+		var toAdd = 1;
+		if (new Date().getDay() == 6 || new Date().getDay() == 0) {
+			toAdd = 2;
+		}
+
+		$("#formtoday").val(dateConverter.firstDay + toAdd);
 		setUpSettings.verifyToday();
 		setUpSettings.day = dateConverter.firstDay;
 	}

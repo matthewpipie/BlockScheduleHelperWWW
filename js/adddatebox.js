@@ -228,13 +228,16 @@ var adddatebox = {
 		return sortedinfos;
 	},
 
-	scheduleCallback: function(value, value2, value3) {
+	scheduleCallback: function(value, value2, value3, value4) {
 		if (value3 == undefined) {
 			value3 = 7;
 			localforage.setItem('daysperweek', value3);
 		}
+		if (value4 == undefined) {
+			$('.plusbuttonholder').css('display', 'none');
+			$('#content').append("Add some classes by clicking on the menu and navigating to the Class Editor.  Then, after adding classes, go to the Schedule Editor to add them into a place on your schedule at a specific day.  Go to settings to change the current school day to something else.");
+		}
 		if (value == undefined) {
-			$('#content').append("Add some classes by clicking on the menu and navigating to the Class Editor.  Then, after adding classes, go to the Schedule Editor to add them into a place on your schedule.  ");
 			value = [];
 			for (var i = 0; i < value3; i++) {
 				value.push([]);
@@ -312,7 +315,7 @@ var adddatebox = {
 				localforage.getItem('daysperweek').then(function(value3) {
 					localforage.getItem('schoolClasses').then(function(value4) {
 						adddatebox.loadClasses(value4);
-						adddatebox.scheduleCallback(value, value2, value3);
+						adddatebox.scheduleCallback(value, value2, value3, value4);
 						adddatebox.updateDay(0);
 					});
 				});
