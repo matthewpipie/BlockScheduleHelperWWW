@@ -76,3 +76,6 @@ td:nth-child(odd) {
 .sp-palette-container {
     border-right: none;
 }
+#openpopup {
+    cursor: pointer;
+}
