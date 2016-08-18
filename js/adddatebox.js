@@ -420,7 +420,7 @@ var adddatebox = {
 
 						unmodGlobalSchedule.splice(i, 1);
 						localforage.setItem('globalSchedule', unmodGlobalSchedule).then(function(value) {
-							adddatebox.scheduleCallback(unmodSchedule, value);
+							adddatebox.scheduleCallback(unmodSchedule, value, false, false);
 							adddatebox.changeCounter(0);
 						});
 					} else {
@@ -433,7 +433,7 @@ var adddatebox = {
 						}
 						unmodSchedule[adddatebox.currentlyEditing['dayofschoolweek']].splice(i, 1);
 						localforage.setItem('schedule', unmodSchedule).then(function(value) {
-							adddatebox.scheduleCallback(value, unmodGlobalSchedule);
+							adddatebox.scheduleCallback(value, unmodGlobalSchedule, false, false);
 							adddatebox.changeCounter(0);
 						});
 					}
@@ -507,7 +507,7 @@ var adddatebox = {
 
 					localforage.setItem('globalSchedule', unmodGlobalSchedule).then(function(val) {
 						localforage.setItem('schedule', unmodSchedule).then(function(val2) {
-							adddatebox.scheduleCallback(val2, val);
+							adddatebox.scheduleCallback(val2, val, false, false);
 							adddatebox.changeCounter(0);
 						});
 					});
@@ -528,7 +528,7 @@ var adddatebox = {
 
 					localforage.setItem('globalSchedule', unmodGlobalSchedule).then(function(val) {
 						localforage.setItem('schedule', unmodSchedule).then(function(val2) {
-							adddatebox.scheduleCallback(val2, val);
+							adddatebox.scheduleCallback(val2, val, false, false);
 							adddatebox.changeCounter(0);
 						});
 					});
@@ -544,7 +544,7 @@ var adddatebox = {
 					unmodGlobalSchedule[i] = correctClass;
 
 					localforage.setItem('globalSchedule', unmodGlobalSchedule).then(function(val) {
-						adddatebox.scheduleCallback(unmodSchedule, val);
+						adddatebox.scheduleCallback(unmodSchedule, val, false, false);
 						adddatebox.changeCounter(0);
 					});
 				} else {
@@ -559,7 +559,7 @@ var adddatebox = {
 					unmodSchedule[adddatebox.currentlyEditing['dayofschoolweek']][i] = correctClass;
 
 					localforage.setItem('schedule', unmodSchedule).then(function(val) {
-						adddatebox.scheduleCallback(val, unmodGlobalSchedule);
+						adddatebox.scheduleCallback(val, unmodGlobalSchedule, false, false);
 						adddatebox.changeCounter(0);
 					})
 				}
