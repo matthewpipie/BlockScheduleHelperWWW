@@ -131,6 +131,7 @@ var schoolClasses = {
 		});
 		$('#formsubmit').button('option', 'disabled', true);
 		$('#formremove').button('option', 'disabled', true);
+		window.scrollTo(0,document.body.scrollHeight);
 	},
 
 	unlockPopup: function() {
