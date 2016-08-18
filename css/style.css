@@ -51,5 +51,6 @@ fieldset > div:last-child > div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow {
 
 #openpopup {
 	width: 80vw;
+	cursor: pointer;
 }
 #header {border-top: transparent}
