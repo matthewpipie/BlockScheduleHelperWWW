@@ -62,7 +62,7 @@ td:nth-child(odd) {
 }
 
 #form :nth-child(3) {
-	display: inline-block;
+	/*display: inline-block;*/
 }
 
 

@@ -67,7 +67,7 @@ var schoolClasses = {
 	spectrumChange: function(tinycolor) {
 
 		if (tinycolor == undefined) {tinycolor = $("#formbgcolor").spectrum('get');}
-
+		if (tinycolor == null) {return;}
 		var alreadyIn = false;
 		var tinycolorhex = tinycolor.toHexString();
 

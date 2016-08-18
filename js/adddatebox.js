@@ -328,7 +328,6 @@ var adddatebox = {
 
 	loadClasses: function(value4) {
 		if (value4 == undefined) {
-			localforage.setItem('schoolClasses', []);
 			value4 = [];
 		}
 		adddatebox.schoolClasses = value4; //[{name: "Math", color: "#123456", id=4, whiteText: false, room: "M169"}]
