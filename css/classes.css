@@ -61,11 +61,6 @@ td:nth-child(odd) {
     overflow: hidden;
 }
 
-#form :nth-child(3) {
-	/*display: inline-block;*/
-}
-
-
 .ui-flipswitch .ui-btn.ui-flipswitch-on {
     text-indent: -4em;
 }
