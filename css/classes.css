@@ -73,3 +73,6 @@ td:nth-child(odd) {
 .ui-flipswitch.ui-flipswitch-active {
     padding-left: 5em;
 }
+.sp-palette-container {
+    border-right: none;
+}
