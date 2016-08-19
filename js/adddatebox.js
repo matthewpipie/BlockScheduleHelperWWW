@@ -233,7 +233,7 @@ var adddatebox = {
 			value3 = 7;
 			localforage.setItem('daysperweek', value3);
 		}
-		if (value4 == undefined) {
+		if (value4.length == 0) {
 			$('.plusbuttonholder').css('display', 'none');
 			$('#content').append("Add some classes by clicking on the menu and navigating to the Class Editor.  Then, after adding classes, go to the Schedule Editor to add them into a place on your schedule at a specific day.  Go to settings to change the current school day to something else.");
 		}
@@ -344,11 +344,6 @@ var adddatebox = {
 
 	addSchoolClass: function(dayofschoolweek) { //generate blank class with id
 		//make sure to store into localforage at the end, then call editschoolclass()
-		if (adddatebox.schoolClasses.length == 0) {
-			navigator.notification.alert("Add a class first, then try again.");
-			return;
-		}
-
 		//find highest id rn
 		var highest = -1;
 		for (var i = 0; i < adddatebox.sortedSchedule.length; i++) {
