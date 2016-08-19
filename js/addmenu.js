@@ -55,6 +55,14 @@ var addmenu = {
 			}
 		});
 		console.log('swipe enabled');
+	},
+	checkOpen: function() {
+		if ($('.ui-panel-dismiss-open').length == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 };

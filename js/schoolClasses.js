@@ -42,10 +42,10 @@ var schoolClasses = {
 	},
 
 	setUpClicks: function() {
-		$('#formsubmit').on('touchend', schoolClasses.handleSubmit);
-		$('#formremove').on('touchend', function() {navigator.notification.confirm("Are you sure you want to remove this class?  This action can NOT be undone.", schoolClasses.removeForm, "Delete Class");});
-		$('.plusbuttonholder').on('touchend', function(ev) {ev.preventDefault(); schoolClasses.addNewClass();});
-		$('#formname').on('touchend', function() {$(this).select();});
+		$('#formsubmit').on('touchend', function() {if (addmenu.checkOpen()) {return} schoolClasses.handleSubmit()});
+		$('#formremove').on('touchend', function() {if (addmenu.checkOpen()) {return} navigator.notification.confirm("Are you sure you want to remove this class?  This action can NOT be undone.", schoolClasses.removeForm, "Delete Class");});
+		$('.plusbuttonholder').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); schoolClasses.addNewClass();});
+		$('#formname').on('touchend', function() {if (addmenu.checkOpen()) {return} $(this).select();});
 	},
 
 	setUpSpectrum: function() {
@@ -160,6 +160,7 @@ var schoolClasses = {
 
 	setUpClickies: function() {
 		$('.rowid').on('touchend', function(ev) {
+			if (addmenu.checkOpen()) {return}
 			ev.preventDefault();
 			for (var i = 0; i < schoolClasses.schoolClasses.length; i++) {
 				if (typeof($(this).attr('id')) == "string") {
