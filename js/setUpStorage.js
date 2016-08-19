@@ -19,6 +19,7 @@ var setUpStorage = {
 	  // this should alert "cordovaSQLiteDriver" when in an emulator or a device
 			//alert(localforage.driver());
 			storage = true;
+			cordova.plugins.notification.local.on('trigger', function(noti, str) {console.log("triggered :O"); console.log(str); setUpSettings.scheduleNextEventAndClear(noti, false)});
 			app.mainSetUp();
 		});
 	}

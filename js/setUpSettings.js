@@ -18,7 +18,6 @@ var setUpSettings = {
 		$('#formtoday').change(setUpSettings.verifyToday);
 		$('#formreset').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.confirmReset()});
 		$('#formreset2').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.confirmReset2()});
-		//setUpSettings.makeNewScheduleEvents();
 	},
 
 	updateSettings: function() {
@@ -40,6 +39,7 @@ var setUpSettings = {
 		dateConverter.getDay();
 
 		setTimeout(setUpSettings.checkDateRan, 10);
+
 	},
 
 	verifyDay: function() {
@@ -296,6 +296,8 @@ var setUpSettings = {
 							
 							timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * (timeToClear - nowTime)));
 
+							bgcolor = setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor');
+
 							console.log(dateToNotify);
 
 							scheduleObj = { 
@@ -304,17 +306,20 @@ var setUpSettings = {
 									(setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') == "" ? "" : " (" + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') + ")"),
 								text: "Starts in " + (timeToClear - timeToNotify).toString() + " minutes",
 								at: dateToNotify,
-								led: setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor').substr(1)
+								led: (bgcolor == null ? "FFFFFF" : bgcolor.substr(1))
 							};
 							console.log(scheduleObj);
+							console.log(timeToClear);
+							console.log(timeToClear - nowTime);
 
 							/*if (thingo) {
 								scheduleObj['sound'] = xyz
 							}*/
 
 							cordova.plugins.notification.local.schedule(scheduleObj);
-							navigator.notification.alert("Notifications have been turned on.");
-
+							if (isInit) {
+								navigator.notification.alert("Notifications have been turned on.");
+							}
 
 						}); //if its past all endtimes, do tomorrow
 					});
@@ -352,19 +357,6 @@ var setUpSettings = {
 		}
 		return daysBetween;
 	},
-
-	/*makeNewScheduleEvents: function() {
-
-		if (setUpSettings.day === false) {
-			setTimeout(setUpSettings.makeNewScheduleEvents, 10);
-			return;
-		}
-
-		cordova.plugins.notification.local.cancelAll(function() {
-			cordova.plugins.notification.local.on('trigger', setUpSettings.scheduleNextEventAndClear);
-			setUpSettings.scheduleNextEventAndClear();
-		});
-	},*/
 
 	handleSubmit: function() {
 		console.log('saving');
