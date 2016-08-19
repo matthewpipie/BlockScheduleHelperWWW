@@ -13,11 +13,11 @@ var setUpSettings = {
 	deviceready: function() {
 		setUpSettings.loadSettings();
 		setUpSettings.updateSettings();
-		$('#formsubmit').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.handleSubmit()});
+		$('#formsubmit').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.handleSubmit()});
 		$('#formdays').change(setUpSettings.verifyDay);
 		$('#formtoday').change(setUpSettings.verifyToday);
-		$('#formreset').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.confirmReset()});
-		$('#formreset2').on('touchend', function(ev) {ev.preventDefault(); setUpSettings.confirmReset2()});
+		$('#formreset').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset()});
+		$('#formreset2').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset2()});
 	},
 
 	updateSettings: function() {
