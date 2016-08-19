@@ -344,6 +344,10 @@ var adddatebox = {
 
 	addSchoolClass: function(dayofschoolweek) { //generate blank class with id
 		//make sure to store into localforage at the end, then call editschoolclass()
+		if (adddatebox.schoolClasses.length == 0) {
+			navigator.notification.alert("Add a class first, then try again.");
+			return;
+		}
 
 		//find highest id rn
 		var highest = -1;
@@ -356,7 +360,7 @@ var adddatebox = {
 			}
 		}
 		var tempSchoolClass = {'className': "0", 'starttime': "12:00", 'endtime': "12:00", 'id': (highest + 1).toString(), 'isGlobal': false};
-		adddatebox.editSchoolClass(tempSchoolClass, dayofschoolweek, true)
+		adddatebox.editSchoolClass(tempSchoolClass, dayofschoolweek, true);
 
 	},
 
