@@ -230,7 +230,8 @@ var setUpSettings = {
 								newDate.setHours(newDate.getHours() + 24);
 								day = setUpSettings.calculateDay(dateday, daysperweek, newDate);
 								var out = false;
-								for (var k = 0; k < 28; k++) {
+								var k;
+								for (k = 1; k < 29; k++) {
 									console.log(day);
 										console.log(newDate);
 									if (schedule[day] == undefined) {
@@ -284,6 +285,9 @@ var setUpSettings = {
 								dateToNotify.setSeconds(0);
 								dateToNotify.setMilliseconds(0);
 								dateToNotify.setMinutes(timeToNotify);
+								/*nowTime = 0;
+								timeToClear = Math.floor((Math.abs(nowTime - dateToNotify)/1000)/60) + 10;*/
+								nowTime = -(k * 1440)
 								
 							}
 
@@ -294,7 +298,7 @@ var setUpSettings = {
 								classToNotify = schedule[day].filter(function(a) {return a['id'] == classToNotify['id']})[0];
 							}
 							
-							timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * (timeToClear - nowTime)));
+							timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * 60 * (timeToClear - nowTime)));
 
 							bgcolor = setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor');
 
