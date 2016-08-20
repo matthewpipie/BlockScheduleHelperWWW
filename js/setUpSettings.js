@@ -199,6 +199,7 @@ var setUpSettings = {
 
 							if (isInit && firstStartTime - nowTime > 10) {
 								j = i - 10;
+								hasfound3 = true;
 							}
 							else {
 								for (j = i; j >= 0; j--) {
