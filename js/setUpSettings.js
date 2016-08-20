@@ -197,13 +197,20 @@ var setUpSettings = {
 								isRegular = false;
 							}
 
-							for (j = i; j >= 0; j--) {
-								if (endtimeSorted.filter(function(a) {return a['endtime'] == j}).length) {
-									hasfound3 = true;
-									firstEndTime = j;
-									break;
+							if (isInit && firstStartTime - nowTime > 10) {
+								j = i - 10;
+							}
+							else {
+								for (j = i; j >= 0; j--) {
+									if (endtimeSorted.filter(function(a) {return a['endtime'] == j}).length) {
+										hasfound3 = true;
+										firstEndTime = j;
+										break;
+									}
 								}
 							}
+
+							
 
 							if (!hasfound3) {
 								isRegular = false;
