@@ -285,8 +285,6 @@ var setUpSettings = {
 								dateToNotify.setSeconds(0);
 								dateToNotify.setMilliseconds(0);
 								dateToNotify.setMinutes(timeToNotify);
-								/*nowTime = 0;
-								timeToClear = Math.floor((Math.abs(nowTime - dateToNotify)/1000)/60) + 10;*/
 								nowTime = -(k * 1440)
 								
 							}
