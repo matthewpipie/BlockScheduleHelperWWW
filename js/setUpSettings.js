@@ -329,11 +329,19 @@ var setUpSettings = {
 
 							console.log(dateToNotify);
 
+							var notiTitle = "Next class: " + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'className') +
+								(setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') == "" ? "" : " (" + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') + ")");
+							var notiText = "Starts in " + (timeToClear - timeToNotify).toString() + " minutes";
+
+							if (now.toDateString() != dateToNotify.toDateString()) {
+								notiText = notiTitle + " in 10";
+								notiTitle = "Today is day " + (parseInt(day) + 1).toString();
+							}
+
 							scheduleObj = { 
 								id: 0,
-								title: "Next class: " + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'className') +
-									(setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') == "" ? "" : " (" + setUpSettings.findClass(schoolClasses, classToNotify['className'], 'room') + ")"),
-								text: "Starts in " + (timeToClear - timeToNotify).toString() + " minutes",
+								title: notiTitle,
+								text: notiText,
 								at: dateToNotify,
 								led: (bgcolor == null ? "FFFFFF" : bgcolor.substr(1))
 							};
