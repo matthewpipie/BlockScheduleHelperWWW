@@ -100,7 +100,7 @@ var setUpSettings = {
 	},
 	handleReset2: function(buttonIndex) {
 		if (buttonIndex == 1) {
-			localforage.setItem('schedule', undefined);
+			localforage.setItem('schedule', []);
 			localforage.setItem('globalSchedule', undefined);
 			localforage.setItem('schoolClasses', undefined);
 			navigator.notification.alert("Schedule and classes deleted.");

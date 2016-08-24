@@ -244,6 +244,14 @@ var adddatebox = {
 			}
 			localforage.setItem('schedule', value);
 			dateConverter.setDateDay("", 0);
+
+		}
+		if (value.length == 0) {
+			value = [];
+			for (var i = 0; i < value3; i++) {
+				value[i] = [];
+			}
+			localforage.setItem('schedule', value);
 		}
 		if (value2 == undefined) {
 			value2 = [];
