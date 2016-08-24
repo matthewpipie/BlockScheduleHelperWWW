@@ -31,9 +31,9 @@
 		dateConverter.dateToFind = new Date(dateConverter.currentDate);
 
 		localforage.getItem('dateday').then(function(value) {
-			if (value == undefined) {
+			/*if (value == undefined) {
 				value = dateConverter.setDateDay("", 0);
-			}
+			}*/
 			dateConverter.setDay = value['day'];
 			dateConverter.setDateO = new Date(value['date']);
 			localforage.getItem('daysperweek').then(function(value) {

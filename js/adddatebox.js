@@ -240,9 +240,10 @@ var adddatebox = {
 		if (value == undefined) {
 			value = [];
 			for (var i = 0; i < value3; i++) {
-				value.push([]);
+				value[i] = [];
 			}
 			localforage.setItem('schedule', value);
+			dateConverter.setDateDay("", 0);
 		}
 		if (value2 == undefined) {
 			value2 = [];
