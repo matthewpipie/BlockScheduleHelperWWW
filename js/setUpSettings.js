@@ -17,6 +17,7 @@
  * Contact the creator (Matthew Giordano) at matthewpipie@gmail.com.
  */
 
+"use strict";
 var timeouts = [];
 var setUpSettings = {
 
@@ -136,7 +137,6 @@ var setUpSettings = {
 							}
 							if (dateday == undefined) {
 								dateday = {'date': new Date().toString(), 'day': 0};
-								localforage.setItem('dateday', dateday);
 							}
 
 							var now = new Date();
@@ -397,6 +397,8 @@ var setUpSettings = {
 
 	handleSubmit: function() {
 		console.log('saving');
+
+		setUpSettings.verifyDay();
 		var twelveHourTime = $("#formtime")[0].checked;
 		var pushNotifications = $("#formnotifications")[0].checked;
 		var dateformat = $("#formselect").val();

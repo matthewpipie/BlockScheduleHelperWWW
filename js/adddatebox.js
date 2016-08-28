@@ -17,6 +17,7 @@
  * Contact the creator (Matthew Giordano) at matthewpipie@gmail.com.
  */
 
+"use strict";
 var adddatebox = {
 	sortedSchedule: "",
 	showWeekendAndDate: true,
