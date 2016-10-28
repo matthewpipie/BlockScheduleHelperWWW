@@ -87,14 +87,27 @@
 
 		return count;
 	},
+
+	newGBDC: function(startDate, endDate) {
+		var sD = new Date(startDate);
+		var eD = new Date(endDate);
+		var count = 1;
+		while (sD.toDateString() !== eD.toDateString()) {
+			sD.setHours(sD.getHours() + 24);
+			if (!(sD.getDay() == 0 || sD.getDay() == 6)) {
+				count++;
+			}
+		}
+		return count;
+	},
 	
 	calculateDay: function(daysperweek) {
 		var daysBetween = 0;
 
 		if (dateConverter.setDateO < dateConverter.dateToFind) { //set before datetofind, aka in the past
-			daysBetween = (dateConverter.getBusinessDatesCount(dateConverter.setDateO, dateConverter.dateToFind) - 1);
+			daysBetween = (dateConverter.newGBDC(dateConverter.setDateO, dateConverter.dateToFind) - 1);
 		} else {
-			daysBetween = -(dateConverter.getBusinessDatesCount(dateConverter.dateToFind, dateConverter.setDateO));
+			daysBetween = -(dateConverter.newGBDC(dateConverter.dateToFind, dateConverter.setDateO));
 		}
 
 		daysBetween += dateConverter.setDay;
@@ -120,3 +133,4 @@
 	pagecontainerbeforeshow: function() {}
 
 }
+	
