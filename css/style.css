@@ -31,7 +31,10 @@
 #header h1 {
 	float: right;
 	margin: 0 5% 0 0 !important;
-	font-size: 1.4em;
+	font-size: 1.5em;
+    padding-bottom: 0;
+    padding-top: 1.1em;
+    color: #222;
 }
 
 #content {
@@ -72,4 +75,4 @@ fieldset > div:last-child > div.ui-btn.ui-input-btn.ui-corner-all.ui-shadow {
 	width: 80vw;
 	cursor: pointer;
 }
-#header {border-top: transparent}
+#header {border-top: transparent; border-bottom: transparent;}

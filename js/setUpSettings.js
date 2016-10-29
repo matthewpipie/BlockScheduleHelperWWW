@@ -38,6 +38,12 @@ var setUpSettings = {
 		$('#formtoday').change(setUpSettings.verifyToday);
 		$('#formreset').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset()});
 		$('#formreset2').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset2()});
+
+		var today = new Date();
+		if (today.getDay() == 6 || today.getDay() == 0) {
+			$("#mondayOrToday").text("Monday");
+		}
+
 	},
 
 	updateSettings: function() {
@@ -145,7 +151,7 @@ var setUpSettings = {
 								clearTimeout(timeouts[i]);
 							}
 
-							day = setUpSettings.calculateDay(dateday, daysperweek, new Date());
+							var day = setUpSettings.calculateDay(dateday, daysperweek, new Date());
 							if (schedule[day] == undefined) {
 								schedule[day] = [];
 							}
@@ -224,7 +230,6 @@ var setUpSettings = {
 								for (j = i; j >= 0; j--) {
 									if (endtimeSorted.filter(function(a) {return a['endtime'] == j}).length) {
 										hasfound3 = true;
-										firstEndTime = j;
 										break;
 									}
 								}
@@ -325,7 +330,7 @@ var setUpSettings = {
 							
 							timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * 60 * (timeToClear - nowTime)));
 
-							bgcolor = setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor');
+							var bgcolor = setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor');
 
 							console.log(dateToNotify);
 
@@ -338,7 +343,7 @@ var setUpSettings = {
 								notiTitle = "Today is day " + (parseInt(day) + 1).toString();
 							}
 
-							scheduleObj = { 
+							var scheduleObj = { 
 								id: 0,
 								title: notiTitle,
 								text: notiText,
@@ -378,11 +383,10 @@ var setUpSettings = {
 		var setDateO = new Date(dateday['date']);
 		var setDay = dateday['day'];
 
-		if (setDateO <= dateToFind) { //set before datetofind, aka in the past
-			daysBetween = (dateConverter.getBusinessDatesCount(setDateO, dateToFind) - 1);
-			if (daysBetween == -1) {daysBetween = 0;}
+		if (setDateO < dateToFind) { //set before datetofind, aka in the past
+			daysBetween = (dateConverter.newGBDC(setDateO, dateToFind) - 1);
 		} else {
-			daysBetween = -(dateConverter.getBusinessDatesCount(dateToFind, setDateO));
+			daysBetween = -(dateConverter.newGBDC(dateToFind, setDateO)) + 1;
 		}
 
 		daysBetween += setDay;

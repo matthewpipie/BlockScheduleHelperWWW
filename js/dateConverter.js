@@ -69,6 +69,14 @@
 				date = new Date(date);
 			}
 		}
+
+		if (date.getDay() == 6) {
+			date.setHours(date.getHours() + 48);
+		}
+		else if (date.getDay() == 0) {
+			date.setHours(date.getHours() + 24);
+		}
+
 		var dateDay = {'date': date.toString(), 'day': day};
 		localforage.setItem('dateday', dateDay);
 		return dateDay;
@@ -107,7 +115,7 @@
 		if (dateConverter.setDateO < dateConverter.dateToFind) { //set before datetofind, aka in the past
 			daysBetween = (dateConverter.newGBDC(dateConverter.setDateO, dateConverter.dateToFind) - 1);
 		} else {
-			daysBetween = -(dateConverter.newGBDC(dateConverter.dateToFind, dateConverter.setDateO));
+			daysBetween = -(dateConverter.newGBDC(dateConverter.dateToFind, dateConverter.setDateO)) + 1;
 		}
 
 		daysBetween += dateConverter.setDay;

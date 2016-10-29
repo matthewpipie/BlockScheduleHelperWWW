@@ -86,8 +86,11 @@ var adddatebox = {
 
 				var today = new Date();
 
-				if (today.getMonth() == dateConverter.currentDate.getMonth() && today.getDate() == day && today.getFullYear() == dateConverter.currentDate.getFullYear()) {
-					formatteddate = "Today";
+				if (today.toDateString() === dateConverter.currentDate.toDateString()) {
+					$("#date").addClass("currentDay");
+				}
+				else {
+					$("#date").removeClass("currentDay");
 				}
 
 				if (dateConverter.currentDate.getDay() == 0 || dateConverter.currentDate.getDay() == 6) {
