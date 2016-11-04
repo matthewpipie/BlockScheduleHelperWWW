@@ -39,6 +39,35 @@
 			//alert(localforage.driver());
 			storage = true;
 			cordova.plugins.notification.local.on('trigger', function(noti, str) {console.log("triggered :O"); console.log(str); setUpSettings.scheduleNextEventAndClear(noti, false)});
+			localforage.getItem('pushNotifications').then(function(val) {
+				if (val == undefined) {
+					val = false;
+					localforage.setItem('pushNotifications', val);
+				}
+				if (val == false) {
+					return;
+				}
+				cordova.plugins.notification.local.isPresent(0, function (present) {
+					if (present) {
+						return;
+					}
+					localforage.getItem("schedule").then(function(val) {
+						var scheduleContainsNothing = true;
+						for (var a = 0; a < val.length; a++) {
+							if (val[a].length) {
+								scheduleContainsNothing = false;
+								break;
+							}
+						}
+						if (scheduleContainsNothing) {
+							return;
+						}
+						cordova.plugins.notification.local.cancelAll(function() {
+							setUpSettings.scheduleNextEventAndClear(null, true);
+						});
+					});
+				});
+			});
 			app.mainSetUp();
 		});
 	}
