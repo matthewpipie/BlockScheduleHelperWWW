@@ -64,7 +64,7 @@ var setUpSettings = {
 		dateConverter.currentDate = new Date();
 		dateConverter.getDay();
 
-		setTimeout(setUpSettings.checkDateRan, 10);
+		//setTimeout(setUpSettings.checkDateRan, 10);
 
 	},
 
