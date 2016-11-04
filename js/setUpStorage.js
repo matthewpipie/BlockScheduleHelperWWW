@@ -47,9 +47,8 @@
 				if (val == false) {
 					return;
 				}
-				cordova.plugins.notification.local.isPresent(0, function (present) {
-					console.log(present);
-					if (present) {
+				cordova.plugins.notification.local.getAllIds(function (ids) {
+					if (ids.length) {
 						return;
 					}
 					localforage.getItem("schedule").then(function(val) {
