@@ -68,6 +68,18 @@
 					});
 				});
 			});
+
+			localforage.getItem("themeDark").then(function(dark) {
+				if (dark == undefined) {
+					dark = false;
+					localforage.setItem("themeDark", false);
+				}
+				if (dark) {
+					$('head').append('<link id="themeDark" rel="stylesheet" type="text/css" href="css/themeDark.css">');
+				}
+			}) 
+
+
 			app.mainSetUp();
 		});
 	}
