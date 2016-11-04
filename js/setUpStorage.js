@@ -48,6 +48,7 @@
 					return;
 				}
 				cordova.plugins.notification.local.isPresent(0, function (present) {
+					console.log(present);
 					if (present) {
 						return;
 					}

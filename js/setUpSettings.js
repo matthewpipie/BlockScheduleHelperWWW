@@ -64,7 +64,7 @@ var setUpSettings = {
 		dateConverter.currentDate = new Date();
 		dateConverter.getDay();
 
-		//setTimeout(setUpSettings.checkDateRan, 10);
+		setTimeout(setUpSettings.checkDateRan, 10);
 
 	},
 
@@ -328,7 +328,7 @@ var setUpSettings = {
 								classToNotify = schedule[day].filter(function(a) {return a['id'] == classToNotify['id']})[0];
 							}
 							
-							timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * 60 * (timeToClear - nowTime)));
+							//timeouts.push(setTimeout(function() {cordova.plugins.notification.local.clearAll();}, 1000 * 60 * (timeToClear - nowTime)));
 
 							var bgcolor = setUpSettings.findClass(schoolClasses, classToNotify['className'], 'bgcolor');
 
