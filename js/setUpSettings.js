@@ -85,7 +85,7 @@ var setUpSettings = {
 		else {
 			$("#themeDark").setAttr("disabled", "disabled");
 		}
-	}
+	},
 
 	verifyDay: function() {
 		if (!$("#formdays").val() || $("#formdays").val() != parseInt($("#formdays").val())) {
