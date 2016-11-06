@@ -75,7 +75,7 @@
 					localforage.setItem("themeDark", false);
 				}
 				if (dark) {
-					$('head').append('<link id="themeDark" rel="stylesheet" type="text/css" href="css/themeDark.css">');
+					$("body").addClass("themeDark");
 				}
 			}) 
 

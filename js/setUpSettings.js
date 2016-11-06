@@ -34,7 +34,7 @@ var setUpSettings = {
 	deviceready: function() {
 		setUpSettings.loadSettings();
 		setUpSettings.updateSettings();
-		$('#formsubmit').on('touchend', function(ev) {if (addmenud.checkOpen()) {return} ev.preventDefault(); setUpSettings.handleSubmit()});
+		$('#formsubmit').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.handleSubmit()});
 		$('#formdays').change(setUpSettings.verifyDay);
 		$('#formtoday').change(setUpSettings.verifyToday);
 		$('#formreset').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset()});
@@ -75,15 +75,10 @@ var setUpSettings = {
 	changeTheme: function() {
 		var dark = $("#formdark")[0].checked;
 		if (dark) {
-			if (!$("#themeDark").length) {
-				$('head').append('<link id="themeDark" rel="stylesheet" type="text/css" href="css/themeDark.css">');
-			}
-			else {
-				$("#themeDark").removeAttr("disabled");
-			}
+			$("body").addClass("themeDark");
 		}
 		else {
-			$("#themeDark").setAttr("disabled", "disabled");
+			$("body").removeClass("themeDark");
 		}
 	},
 
