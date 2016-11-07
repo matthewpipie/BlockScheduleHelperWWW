@@ -433,6 +433,11 @@ var adddatebox = {
 						localforage.setItem('globalSchedule', unmodGlobalSchedule).then(function(value) {
 							adddatebox.scheduleCallback(unmodSchedule, value, false);
 							adddatebox.changeCounter(0);
+							localforage.getItem('pushNotifications').then(function(val) {
+								if (val) {
+									setUpSettings.scheduleNextEventAndClear(null, true, false);
+								}
+							});
 						});
 					} else {
 						//remove on day
@@ -446,6 +451,11 @@ var adddatebox = {
 						localforage.setItem('schedule', unmodSchedule).then(function(value) {
 							adddatebox.scheduleCallback(value, unmodGlobalSchedule, false);
 							adddatebox.changeCounter(0);
+							localforage.getItem('pushNotifications').then(function(val) {
+								if (val) {
+									setUpSettings.scheduleNextEventAndClear(null, true, false);
+								}
+							});
 						});
 					}
 				});

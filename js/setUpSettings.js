@@ -128,9 +128,12 @@ var setUpSettings = {
 		}
 	},
 
-	scheduleNextEventAndClear: function(notification, isInit) {
+	scheduleNextEventAndClear: function(notification, isInit, notify) {
 		if (isInit == undefined) {
 			isInit = false;
+		}
+		if (notify == undefined) {
+			notify = true;
 		}
 		//settimout for x minutes to wipe notifications
 		//make next notification
@@ -373,7 +376,7 @@ var setUpSettings = {
 							}*/
 
 							cordova.plugins.notification.local.schedule(scheduleObj);
-							if (isInit) {
+							if (isInit && notify) {
 								navigator.notification.alert("Notifications have been turned on.");
 							}
 

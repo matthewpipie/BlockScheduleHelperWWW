@@ -241,17 +241,23 @@ var schoolClasses = {
 						}
 					}
 				}
-				localforage.setItem('schedule', value);
+				localforage.setItem('schedule', value).then(function() {
+					localforage.getItem('globalSchedule').then(function(value2) {
+						for (var i = 0; i < value2.length; i++) {
+							if (value2[i]['className'] == schoolClasses.currentlyEditing['schoolClass']['id']) {
+								value2.splice(i, 1);
+							}
+						}
+						localforage.setItem('globalSchedule', value2);
+					});
+				});
 			});
-			localforage.getItem('globalSchedule').then(function(value2) {
-				for (var i = 0; i < value2.length; i++) {
-					if (value2[i]['className'] == schoolClasses.currentlyEditing['schoolClass']['id']) {
-						value2.splice(i, 1);
-					}
+			
+			localforage.getItem('pushNotifications').then(function(val) {
+				if (val) {
+					setUpSettings.scheduleNextEventAndClear(null, true, false);
 				}
-				localforage.setItem('globalSchedule', value2);
-			});
-
+			})
 		}
 	},
 
