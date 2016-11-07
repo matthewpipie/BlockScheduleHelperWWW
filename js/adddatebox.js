@@ -239,7 +239,7 @@ var adddatebox = {
 		}
 		if (adddatebox.schoolClasses.length == 0) {
 			$('.plusbuttonholder').css('display', 'none');
-			$('#content').append("Add some classes by clicking on the menu and navigating to the Class Editor.  Then, after adding classes, go to the Schedule Editor to add them into a place on your schedule at a specific day.  Go to settings to change the current school day to something else.");
+			$('#content').append("<p>Add some classes by clicking on the menu and navigating to the Class Editor.  Then, after adding classes, go to the Schedule Editor to add them into a place on your schedule at a specific day.  Go to settings to change the current school day to something else.</p>");
 		}
 		if (value == undefined) {
 			value = [];
@@ -367,8 +367,10 @@ var adddatebox = {
 				}
 			}
 		}
-		var tempSchoolClass = {'className': "0", 'starttime': "12:00", 'endtime': "12:00", 'id': (highest + 1).toString(), 'isGlobal': false};
-		adddatebox.editSchoolClass(tempSchoolClass, dayofschoolweek, true);
+		localforage.getItem('schoolClasses').then(function(val) {
+			var tempSchoolClass = {'className': val[0].id, 'starttime': "12:00", 'endtime': "12:00", 'id': (highest + 1).toString(), 'isGlobal': false};
+			adddatebox.editSchoolClass(tempSchoolClass, dayofschoolweek, true);
+		});
 
 	},
 

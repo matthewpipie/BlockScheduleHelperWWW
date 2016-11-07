@@ -205,3 +205,7 @@ body.themeDark .sp-palette-row .sp-thumb-el {
 body.themeDark .page #mainform {
     color: #ccc;
 }
+
+body.themeDark .page #content > p {
+    color: #ccc;
+}
