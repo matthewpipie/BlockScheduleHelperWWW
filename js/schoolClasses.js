@@ -248,16 +248,20 @@ var schoolClasses = {
 								value2.splice(i, 1);
 							}
 						}
-						localforage.setItem('globalSchedule', value2);
+						localforage.setItem('globalSchedule', value2).then(function() {
+							localforage.getItem('pushNotifications').then(function(val) {
+								if (val) {
+									cordova.plugins.notification.local.cancelAll(function() {
+										setUpSettings.scheduleNextEventAndClear(null, true, false);
+									});
+								}
+							});
+						});
 					});
 				});
 			});
 			
-			localforage.getItem('pushNotifications').then(function(val) {
-				if (val) {
-					setUpSettings.scheduleNextEventAndClear(null, true, false);
-				}
-			})
+			
 		}
 	},
 

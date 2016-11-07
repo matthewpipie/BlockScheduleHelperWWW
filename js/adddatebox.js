@@ -435,7 +435,9 @@ var adddatebox = {
 							adddatebox.changeCounter(0);
 							localforage.getItem('pushNotifications').then(function(val) {
 								if (val) {
-									setUpSettings.scheduleNextEventAndClear(null, true, false);
+									cordova.plugins.notification.local.cancelAll(function() {
+										setUpSettings.scheduleNextEventAndClear(null, true, false);
+									});
 								}
 							});
 						});
@@ -453,7 +455,9 @@ var adddatebox = {
 							adddatebox.changeCounter(0);
 							localforage.getItem('pushNotifications').then(function(val) {
 								if (val) {
-									setUpSettings.scheduleNextEventAndClear(null, true, false);
+									cordova.plugins.notification.local.cancelAll(function() {
+										setUpSettings.scheduleNextEventAndClear(null, true, false);
+									});
 								}
 							});
 						});
@@ -531,6 +535,13 @@ var adddatebox = {
 						localforage.setItem('schedule', unmodSchedule).then(function(val2) {
 							adddatebox.scheduleCallback(val2, val, false);
 							adddatebox.changeCounter(0);
+							localforage.getItem('pushNotifications').then(function(val) {
+								if (val) {
+									cordova.plugins.notification.local.cancelAll(function() {
+										setUpSettings.scheduleNextEventAndClear(null, true, false);
+									});
+								}
+							});
 						});
 					});
 
@@ -552,6 +563,13 @@ var adddatebox = {
 						localforage.setItem('schedule', unmodSchedule).then(function(val2) {
 							adddatebox.scheduleCallback(val2, val, false);
 							adddatebox.changeCounter(0);
+							localforage.getItem('pushNotifications').then(function(val) {
+								if (val) {
+									cordova.plugins.notification.local.cancelAll(function() {
+										setUpSettings.scheduleNextEventAndClear(null, true, false);
+									});
+								}
+							});
 						});
 					});
 
@@ -568,6 +586,13 @@ var adddatebox = {
 					localforage.setItem('globalSchedule', unmodGlobalSchedule).then(function(val) {
 						adddatebox.scheduleCallback(unmodSchedule, val, false);
 						adddatebox.changeCounter(0);
+						localforage.getItem('pushNotifications').then(function(val) {
+							if (val) {
+								cordova.plugins.notification.local.cancelAll(function() {
+									setUpSettings.scheduleNextEventAndClear(null, true, false);
+								});
+							}
+						});
 					});
 				} else {
 					//STILL NOT GLOBAL
@@ -583,7 +608,14 @@ var adddatebox = {
 					localforage.setItem('schedule', unmodSchedule).then(function(val) {
 						adddatebox.scheduleCallback(val, unmodGlobalSchedule, false);
 						adddatebox.changeCounter(0);
-					})
+						localforage.getItem('pushNotifications').then(function(val) {
+							if (val) {
+								cordova.plugins.notification.local.cancelAll(function() {
+									setUpSettings.scheduleNextEventAndClear(null, true, false);
+								});
+							}
+						});
+					});
 				}
 			});
 		});
