@@ -74,7 +74,7 @@
 							return;
 						}
 						cordova.plugins.notification.local.cancelAll(function() {
-							setUpSettings.scheduleNextEventAndClear(null, true);
+							setUpSettings.scheduleNextEventAndClear(null, true, false);
 						});
 					});
 				});

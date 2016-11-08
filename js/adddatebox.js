@@ -468,7 +468,6 @@ var adddatebox = {
 				
 			});
 
-			adddatebox.currentlyEditing['dayofschoolweek']
 		}
 	},
 
