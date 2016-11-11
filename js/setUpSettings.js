@@ -28,7 +28,7 @@ var setUpSettings = {
 	daysperweek: 7,
 	ready: false,
 	day: false,
-	presets: [],
+	presets: [{name: "Blank", schedule: [], globalSchedule: [], schoolClasses: []}],
 
 	pagecontainerbeforeshow: function() {
 	},
@@ -84,7 +84,15 @@ var setUpSettings = {
 				navigator.notification.alert("You must erase everything before loading a preset.");
 			}
 			else {
-				alert('byebye');
+				var preset = $("#formpreset").val();
+				if (preset) {
+					localforage.setItem("schoolClasses", setUpSettings.presets[preset].schoolClasses);
+					localforage.setItem("schedule", setUpSettings.presets[preset].schedule);
+					localforage.setItem("globalSchedule", setUpSettings.presets[preset].globalSchedule);
+				}
+				else {
+					navigator.notification.alert("Error: No presets loaded.  Ensure you are connected to the internet, and try again later.");
+				}
 			}
 		});
 	},
