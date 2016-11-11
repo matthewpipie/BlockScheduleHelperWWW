@@ -28,6 +28,7 @@ var setUpSettings = {
 	daysperweek: 7,
 	ready: false,
 	day: false,
+	presets: [],
 
 	pagecontainerbeforeshow: function() {
 	},
@@ -40,6 +41,8 @@ var setUpSettings = {
 		$('#formreset').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset()});
 		$('#formreset2').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmReset2()});
 		$('#formdark').change(setUpSettings.changeTheme);
+		setUpSettings.loadPresets();
+		$('#formpresetsubmit').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); setUpSettings.confirmPreset()});
 
 		var today = new Date();
 		if (today.getDay() == 6 || today.getDay() == 0) {
@@ -71,6 +74,19 @@ var setUpSettings = {
 
 		setTimeout(setUpSettings.checkDateRan, 10);
 
+	},
+	loadPresets: function() {
+
+	},
+	confirmPreset: function() {
+		localforage.getItem("schoolClasses").then(function(value) {
+			if (value.length) {
+				navigator.notification.alert("You must erase everything before loading a preset.");
+			}
+			else {
+				alert('byebye');
+			}
+		});
 	},
 	changeTheme: function() {
 		var dark = $("#formdark")[0].checked;
