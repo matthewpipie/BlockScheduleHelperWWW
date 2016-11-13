@@ -105,7 +105,7 @@ var setUpSettings = {
 					localforage.setItem("schoolClasses", setUpSettings.presets[preset].schoolClasses);
 					localforage.setItem("schedule", setUpSettings.presets[preset].schedule);
 					localforage.setItem("globalSchedule", setUpSettings.presets[preset].globalSchedule);
-					navigator.notification.alert("The selected preset was loaded.  Go into Class Editor to customize your schedule further.", function() {location.reload();});
+					navigator.notification.alert("The selected preset was loaded.  Go into Class Editor to customize your schedule further.", function() {window.location = "index.html";});
 				}
 				else {
 					navigator.notification.alert("You must erase everything before loading a preset.");
@@ -120,9 +120,11 @@ var setUpSettings = {
 		var dark = $("#formdark")[0].checked;
 		if (dark) {
 			$("body").addClass("themeDark");
+			$("#invert-class-colors").removeClass("hidden");
 		}
 		else {
 			$("body").removeClass("themeDark");
+			$("#invert-class-colors").addClass("hidden");
 		}
 	},
 
@@ -469,7 +471,10 @@ var setUpSettings = {
 		var dateformat = $("#formselect").val();
 		var daysperweek = $("#formdays").val();
 		var currentDay = $("#formtoday").val();
-		var dark = $("#formdark")[0].checked;
+		var dark = +$("#formdark")[0].checked;
+		if (dark && $('#formdarkclasses')[0].checked) {
+			dark = 2;
+		}
 
 		localforage.setItem('twelveHourTime', twelveHourTime);
 		localforage.setItem('pushNotifications', pushNotifications);

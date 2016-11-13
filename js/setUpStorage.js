@@ -41,11 +41,14 @@
 			
 			localforage.getItem("themeDark").then(function(dark) {
 				if (dark == undefined) {
-					dark = false;
-					localforage.setItem("themeDark", false);
+					dark = 0;
+					localforage.setItem("themeDark", dark);
 				}
-				if (dark) {
+				if (dark > 0) {
 					$("body").addClass("themeDark");
+					if (dark == 2) {
+						$("body").addClass("invertClasses");
+					}
 				}
 			});
 
