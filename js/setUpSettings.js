@@ -19,6 +19,7 @@
 
 "use strict";
 var timeouts = [];
+var PRESET_URL = "https://matthewpipie.github.io/presets.json";
 var setUpSettings = {
 
 	twelveHourTime: false,
@@ -28,7 +29,7 @@ var setUpSettings = {
 	daysperweek: 7,
 	ready: false,
 	day: false,
-	presets: [{name: "Blank", schedule: [], globalSchedule: [], schoolClasses: []}],
+	presets: [],
 
 	pagecontainerbeforeshow: function() {
 	},
@@ -76,23 +77,42 @@ var setUpSettings = {
 
 	},
 	loadPresets: function() {
-
+		$("#formpreset").append("<option class='preset loadingPlaceholder' selected value=0>Loading...</option>");
+		$.ajax({
+			url: PRESET_URL,
+		    type: 'GET',
+		    dataType: 'json',
+		    cache: false, // Appends _={timestamp} to the request query string
+		    success: function( presets ) {
+		        $(".loadingPlaceholder").remove();
+				setUpSettings.presets = presets;
+				for (var i = 0; i < presets.length; i++) {
+					$("#formpreset").append("<option class='preset' value=" + i + ">" + presets[i].name + "</option>");
+				}
+				$(".preset")[0].selected = true;
+				$("#formpreset").selectmenu("refresh");
+		    }
+		});
 	},
+
 	confirmPreset: function() {
 		localforage.getItem("schoolClasses").then(function(value) {
-			if (value.length) {
-				navigator.notification.alert("You must erase everything before loading a preset.");
-			}
-			else {
-				var preset = $("#formpreset").val();
-				if (preset) {
+			if (setUpSettings.presets.length) {
+				if (!value.length) {
+					var preset = $("#formpreset").val();
+					localforage.setItem("dateday", setUpSettings.presets[preset].dateday);
+					localforage.setItem("daysperweek", setUpSettings.presets[preset].schedule.length);
 					localforage.setItem("schoolClasses", setUpSettings.presets[preset].schoolClasses);
 					localforage.setItem("schedule", setUpSettings.presets[preset].schedule);
 					localforage.setItem("globalSchedule", setUpSettings.presets[preset].globalSchedule);
+					navigator.notification.alert("The selected preset was loaded.  Go into Class Editor to customize your schedule further.", function() {location.reload();});
 				}
 				else {
-					navigator.notification.alert("Error: No presets loaded.  Ensure you are connected to the internet, and try again later.");
+					navigator.notification.alert("You must erase everything before loading a preset.");
 				}
+			}
+			else {
+				navigator.notification.alert("Error: No presets loaded.  Ensure you are connected to the internet, and try again later.");
 			}
 		});
 	},
@@ -138,16 +158,16 @@ var setUpSettings = {
 	},
 	handleReset: function(buttonIndex) {
 		if (buttonIndex == 1) {
-			localforage.setItem('schedule', undefined);
-			localforage.setItem('globalSchedule', undefined);
+			localforage.setItem('schedule', []);
+			localforage.setItem('globalSchedule', []);
 			navigator.notification.alert("Schedule deleted.");
 		}
 	},
 	handleReset2: function(buttonIndex) {
 		if (buttonIndex == 1) {
 			localforage.setItem('schedule', []);
-			localforage.setItem('globalSchedule', undefined);
-			localforage.setItem('schoolClasses', undefined);
+			localforage.setItem('globalSchedule', []);
+			localforage.setItem('schoolClasses', []);
 			navigator.notification.alert("Schedule and classes deleted.");
 		}
 	},

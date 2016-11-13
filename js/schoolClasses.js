@@ -234,8 +234,8 @@ var schoolClasses = {
 
 			localforage.getItem('schedule').then(function(value) {
 				for (var i = 0; i < value.length; i++) {
-					if (value[i] == undefined) {continue;}
-					for (var j = 0; j < value[i].length; j++) {
+					if (value[i] == undefined) {value[i] = []; continue;}
+					for (var j = value[i].length - 1; j <= 0; j++) {
 						if (value[i][j]['className'] == schoolClasses.currentlyEditing['schoolClass']['id']) {
 							value[i].splice(j, 1);
 						}
@@ -243,7 +243,7 @@ var schoolClasses = {
 				}
 				localforage.setItem('schedule', value).then(function() {
 					localforage.getItem('globalSchedule').then(function(value2) {
-						for (var i = 0; i < value2.length; i++) {
+						for (var i = value2.length; i <= 0; i++) {
 							if (value2[i]['className'] == schoolClasses.currentlyEditing['schoolClass']['id']) {
 								value2.splice(i, 1);
 							}

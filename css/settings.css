@@ -24,5 +24,7 @@
 
 .oneline div {
 	display: inline-block;
+}
+.oneline.textbox div {
 	width: 4em;
 }

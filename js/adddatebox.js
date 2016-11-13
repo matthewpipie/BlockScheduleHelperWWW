@@ -32,6 +32,7 @@ var adddatebox = {
 	'<span id="rightbutton"><span id="bar3"></span><span id="bar4"></span></span>' +
 '</div>',
 	days: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+	startEndDifferenceMS: 60,
 
 	waitUntilDateSet: function() {
 		if (!dateConverter.dateSet) {
@@ -262,6 +263,11 @@ var adddatebox = {
 			localforage.setItem('globalSchedule', value2);
 		}
 
+		if (value3) {
+			value.length = value3;
+			localforage.setItem('schedule', value);
+		}
+
 		adddatebox.sortedSchedule = adddatebox.decompress(value, value2);
 	},
 
@@ -305,6 +311,48 @@ var adddatebox = {
 		}
 	},
 
+	calculateTimeDifference: function() {
+		var newStart = $("#formstarttime").val();
+		var newEnd = $("#formendtime").val();
+		
+		var startDate = new Date()
+		startDate.setHours(newStart.substr(0,2));
+		startDate.setMinutes(newStart.substr(3));
+		startDate.setSeconds(0);
+		startDate.setMilliseconds(0);
+
+		var endDate = new Date()
+		endDate.setHours(newEnd.substr(0,2));
+		endDate.setMinutes(newEnd.substr(3));
+		endDate.setSeconds(0);
+		endDate.setMilliseconds(0);
+
+
+		adddatebox.startEndDifferenceMS = endDate - startDate;
+	},
+
+	startTimeChange: function() {
+		var newVal = $('#formstarttime').val();
+		if (newVal !== "") {
+			var newDate = new Date()
+			newDate.setHours(newVal.substr(0,2));
+			newDate.setMinutes(newVal.substr(3));
+			newDate.setSeconds(0);
+			newDate.setMilliseconds(adddatebox.startEndDifferenceMS);
+			var hours = newDate.getHours();
+			var minutes = newDate.getMinutes();
+			var addZeroHours = '';
+			var addZeroMinutes = '';
+			if (hours < 10) {
+				addZeroHours = '0';
+			}
+			if (minutes < 10) {
+				addZeroMinutes = '0';
+			}
+			$("#formendtime").val(addZeroHours + hours + ':' + addZeroMinutes + minutes);
+		}
+	},
+
 	setUpClicks: function() {
 		$('#leftbutton').on('touchend', function() {if (addmenu.checkOpen()) {return} adddatebox.gotClick(-1);});
 		$('#rightbutton').on('touchend', function() {if (addmenu.checkOpen()) {return} adddatebox.gotClick(1);});
@@ -312,6 +360,8 @@ var adddatebox = {
 		$('#formremove').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); adddatebox.confirmRemove();});
 		$('.plusbuttonholder').on('touchend', function(ev) {if (addmenu.checkOpen()) {return} ev.preventDefault(); adddatebox.addSchoolClass(adddatebox.daycounter)})
 		$('#formname').on('touchend', function() {if (addmenu.checkOpen()) {return} $(this).select();});
+		$('#formstarttime').change(adddatebox.startTimeChange);
+		$('#formendtime').change(adddatebox.calculateTimeDifference);
 	},
 
 	confirmRemove: function() {
@@ -367,8 +417,27 @@ var adddatebox = {
 				}
 			}
 		}
+		var classList = $(".rowid");
+		var st = "";
+		if (classList.length) {
+			var classElementID = classList[classList.length - 1].id.substr(3);
+			for (var i = 0; i < adddatebox.sortedSchedule.length; i++) {
+				if (adddatebox.sortedSchedule[i] == undefined) {continue;}
+				for (var j = 0; j < adddatebox.sortedSchedule[i].length; j++) {
+					if (adddatebox.sortedSchedule[i][j]['id'] === classElementID) {
+						st = adddatebox.sortedSchedule[i][j]['endtime'];
+						break;
+					}
+				}
+			}
+		}
+		
+		if (st === "") {
+			st = "07:30";
+		}
 		localforage.getItem('schoolClasses').then(function(val) {
-			var tempSchoolClass = {'className': val[0].id, 'starttime': "12:00", 'endtime': "12:00", 'id': (highest + 1).toString(), 'isGlobal': false};
+			var tempSchoolClass = {'className': val[0].id, 'starttime': st, 'endtime': "00:00", 'id': (highest + 1).toString(), 'isGlobal': false};
+			adddatebox.startEndDifferenceMS = 3600000;
 			adddatebox.editSchoolClass(tempSchoolClass, dayofschoolweek, true);
 		});
 
@@ -408,7 +477,13 @@ var adddatebox = {
 			$("#formglobal").flipswitch("refresh");
 		}
 
-		adddatebox.currentlyEditing = {'schoolClass': schoolClass, 'dayofschoolweek': dayofschoolweek, 'isNew': isNew};;
+		adddatebox.currentlyEditing = {'schoolClass': schoolClass, 'dayofschoolweek': dayofschoolweek, 'isNew': isNew};
+
+		if (isNew) {
+			adddatebox.startTimeChange();
+		}
+
+		adddatebox.calculateTimeDifference();
 
 		$('#openpopup').popup('open');
 		setTimeout(function() {document.activeElement.blur();}, 10);
