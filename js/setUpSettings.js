@@ -101,7 +101,7 @@ var setUpSettings = {
 	confirmPreset: function() {
 		localforage.getItem("schoolClasses").then(function(value) {
 			if (setUpSettings.presets.length) {
-				if (!value.length) {
+				if (value == undefined || !value.length) {
 					var preset = $("#formpreset").val();
 					localforage.setItem("dateday", setUpSettings.presets[preset].dateday);
 					localforage.setItem("daysperweek", setUpSettings.presets[preset].schedule.length);
